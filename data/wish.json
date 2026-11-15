@@ -1,0 +1,121 @@
+[
+{
+"id": "s_beehwa_23482991",
+"author": "Team. 비화",
+"createdAt": 1794630700000,
+"linkStatus": "locked",
+"pMax": 1,
+"pMin": 1,
+"prio": 2,
+"status": "wish",
+"system": "CoC",
+"tags": [
+"고어",
+"영화관"
+],
+"time": "",
+"title": "POPCORN CINEMA 🍿",
+"url": "https://www.postype.com/@beehwa-510/post/23482991",
+"warns": [
+"텍스트 고어",
+"장기·시체",
+"절단",
+"유혈",
+"바디 호러",
+"불합리한 상황",
+"무력함",
+"열린 결말",
+"로스트 높음"
+]
+},
+{
+"id": "s_dokgam_23468776",
+"author": "독감",
+"createdAt": 1794631100002,
+"linkStatus": "ok",
+"pMax": 1,
+"pMin": 1,
+"prio": 2,
+"status": "wish",
+"system": "CoC",
+"tags": [
+"시리어스",
+"로맨스",
+"관계성",
+"과거",
+"숙련자 추천",
+"타이만"
+],
+"time": "7~12시간",
+"title": "능소화 지는 날",
+"traits": {
+"era": "근대·과거",
+"kpc": "있음",
+"lost": "낮음"
+},
+"url": "https://www.postype.com/@dokgamsnr/post/23468776",
+"warns": [
+"전기고문",
+"KPC 로스트 중간"
+]
+},
+{
+"id": "s_kimchi_23489831",
+"author": "연곤",
+"createdAt": 1794631100000,
+"linkStatus": "ok",
+"pMax": 0,
+"pMin": 0,
+"prio": 2,
+"status": "wish",
+"system": "CoC",
+"tags": [
+"공포",
+"코미디",
+"뱀파이어"
+],
+"time": "",
+"title": "There is Toooo much Red (투머치드)",
+"traits": {
+"kpc": "있음"
+},
+"url": "https://www.postype.com/@kimchi-trpg/post/23489831",
+"warns": [
+"유혈",
+"사망 묘사",
+"흡혈",
+"PvP 가능",
+"로스트 가능",
+"진상 일부 미공개"
+]
+},
+{
+"id": "s_kimiyou_23492820",
+"author": "키미유",
+"createdAt": 1794629400000,
+"linkStatus": "ok",
+"pMax": 0,
+"pMin": 0,
+"prio": 2,
+"status": "wish",
+"system": "CoC",
+"tags": [
+"탐색",
+"클로즈드",
+"판타지",
+"단편",
+"2차 창작",
+"소인",
+"저택"
+],
+"time": "",
+"title": "마루 밑의 탐사자 (마밑탐)",
+"traits": {
+"stage": "클로즈드"
+},
+"url": "https://www.postype.com/@kimiyou/post/23492820",
+"warns": [
+"KPC 로스트 가능"
+]
+}
+]
