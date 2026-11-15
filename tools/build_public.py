@@ -28,9 +28,7 @@ rep('  render(); init().finally(()=>document.body.classList.remove("busy"));',
     '  const DATA=' + json.dumps(items, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/") + ';\n  DATA.forEach(x=>items.set(x.id,x));\n  render(); note("읽기 전용 · ' + stamp + ' 기준");')
 import os
 gbp = os.path.join(os.path.dirname(os.path.abspath(wishp)), "guestbook.json")
-if os.path.exists(gbp):
-    gb = json.load(open(gbp, encoding="utf-8"))
-    if gb.get("form") and gb.get("csv"):
-        rep('<body class="ro">', '<body class="ro">\n<script>window.GB_CONFIG=' + json.dumps(gb, ensure_ascii=False).replace("</", "<\\/") + ';</script>')
+gb = json.load(open(gbp, encoding="utf-8")) if os.path.exists(gbp) else {}
+rep('<body class="ro">', '<body class="ro">\n<script>window.GB_CONFIG=' + json.dumps(gb, ensure_ascii=False).replace("</", "<\\/") + ';</script>')
 open(out, "w", encoding="utf-8").write(s)
 print("built", out, "wish", len(wish), "played", len(played))
