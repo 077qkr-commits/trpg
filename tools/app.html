@@ -959,7 +959,7 @@ PX.cursor=(()=>{
   }
 
   // ───────── 방명록 (구글 폼 + 게시된 시트) ─────────
-  const GB=window.GB_CONFIG||null, GB_READY=!!(GB&&GB.form&&GB.csv&&GB.entries);
+  const GB=window.GB_CONFIG||null, GB_READ=!!(GB&&GB.csv), GB_POST=!!(GB&&GB.form&&GB.entries), GB_VIEW=GB&&safeUrl(GB.view||"");
   let gbRows=[], gbState="idle";
   function parseCSV(t){ const rows=[]; let row=[], f="", q=false;
     for(let i=0;i<t.length;i++){ const c=t[i];
@@ -967,7 +967,7 @@ PX.cursor=(()=>{
       else if(c==='"') q=true; else if(c===","){ row.push(f); f=""; } else if(c==="\n"){ row.push(f); rows.push(row); row=[]; f=""; } else if(c!=="\r") f+=c; }
     if(f||row.length){ row.push(f); rows.push(row); } return rows; }
   async function gbLoad(){
-    if(!GB_READY) return; gbState="loading";
+    if(!GB_READ) return; gbState="loading";
     try{ const r=await fetch(GB.csv+(GB.csv.includes("?")?"&":"?")+"t="+Date.now(),{cache:"no-store"}); if(!r.ok) throw 0;
       gbRows=parseCSV(await r.text()).slice(1).filter(x=>(x[1]||"").trim()||(x[5]||"").trim()).map(x=>({ts:(x[0]||"").slice(0,30),title:(x[1]||"").trim().slice(0,120),url:safeUrl((x[2]||"").trim()),nick:(x[3]||"").trim().slice(0,40),chara:(x[4]||"").trim().slice(0,80),why:(x[5]||"").trim().slice(0,1000)})).reverse();
       gbState="ok"; }catch(e){ gbState="err"; }
@@ -977,9 +977,9 @@ PX.cursor=(()=>{
   function gbFor(it){ const t=displayTitle(it).trim(); return gbRows.filter(r=>(it.url&&r.url&&normU(r.url)===normU(it.url))||r.title===t||(it.title&&r.title===it.title.trim())); }
   function gbCard(r,withTitle){ return `<div class="gbcard"><span class="ts">${esc(r.ts)}</span>${withTitle?`<b>${r.url?`<a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.title||"(제목 없음)")}</a>`:esc(r.title||"(제목 없음)")}</b>`:""}<div class="who"><span>✎ ${esc(r.nick||"익명")}</span>${r.chara?`<span>♟ ${esc(r.chara)}</span>`:""}</div>${r.why?`<p>${esc(r.why)}</p>`:""}</div>`; }
   function gbSection(it){ if(!GB||it.deleted) return ""; const rs=gbFor(it); return rs.length?`<h4>방명록 (${rs.length})</h4>${rs.map(r=>gbCard(r,false)).join("")}`:""; }
-  function gbRender(){ if(!GB) return; $("gbList").innerHTML=!GB_READY?"방명록 저장소가 아직 연결되지 않았습니다. 연결되면 여기에 남긴 글이 모입니다.":gbState==="loading"&&!gbRows.length?"불러오는 중…":gbState==="err"&&!gbRows.length?"방명록을 불러오지 못했습니다. [새로 고침]을 눌러 보세요.":gbRows.length?gbRows.map(r=>gbCard(r,true)).join(""):"아직 남긴 글이 없습니다. 첫 글을 남겨 보세요!"; }
+  function gbRender(){ if(!GB) return; $("gbList").innerHTML=!GB_READ?"방명록 저장소가 아직 연결되지 않았습니다. 연결되면 여기에 남긴 글이 모입니다.":gbState==="loading"&&!gbRows.length?"불러오는 중…":gbState==="err"&&!gbRows.length?"방명록을 불러오지 못했습니다. [새로 고침]을 눌러 보세요.":gbRows.length?gbRows.map(r=>gbCard(r,true)).join(""):"아직 남긴 글이 없습니다. 첫 글을 남겨 보세요!"; }
   function openGuest(){ if(!GB) return; gbRender(); $("gbBack").classList.add("on"); gbLoad(); }
-  function openWrite(it){ if(!GB) return; $("gTitle").value=it?displayTitle(it):""; $("gUrl").value=it?(it.url||""):""; $("gChara").value=""; $("gWhy").value=""; $("gErr").textContent="";
+  function openWrite(it){ if(!GB) return; if(!GB_POST&&GB_VIEW){ window.open(GB_VIEW,"_blank","noopener"); toast("방명록","새 창에서 열린 양식에 적어 주세요. 남긴 글은 잠시 뒤 [새로 고침]을 누르면 보입니다."); return; } $("gTitle").value=it?displayTitle(it):""; $("gUrl").value=it?(it.url||""):""; $("gChara").value=""; $("gWhy").value=""; $("gErr").textContent="";
     try{ $("gNick").value=localStorage.getItem("trpg-nick")||""; }catch(e){}
     $("gbWriteBack").classList.add("on"); setTimeout(()=>$(it?"gNick":"gTitle").focus(),30); }
   $("gbX").onclick=$("gbClose").onclick=()=>$("gbBack").classList.remove("on");
@@ -992,7 +992,7 @@ PX.cursor=(()=>{
     if(!v.title){ $("gErr").textContent="시나리오 이름을 적어 주세요."; return; }
     if(!v.nick){ $("gErr").textContent="닉네임을 적어 주세요."; return; }
     if(v.url&&!safeUrl(v.url)){ $("gErr").textContent="링크는 https:// 로 시작해야 합니다."; return; }
-    if(!GB_READY){ $("gErr").textContent="방명록 저장소가 아직 연결되지 않아 글을 보낼 수 없습니다."; return; }
+    if(!GB_POST){ $("gErr").textContent="방명록 저장소가 아직 연결되지 않아 글을 보낼 수 없습니다."; return; }
     const body=new URLSearchParams(); for(const k of ["title","url","nick","chara","why"]) body.append(GB.entries[k],v[k]);
     $("gSend").disabled=true;
     try{ await fetch(GB.form,{method:"POST",mode:"no-cors",body}); }
