@@ -257,6 +257,15 @@
   .explorer.max .rz{display:none}
   @media(max-width:900px){.explorer .rz{display:none}}
   @media(max-width:760px){.rz,.vwin .grip{display:none}}
+  .gbdlg{max-width:620px}
+  .gblist{background:#fff;box-shadow:var(--sunken);padding:8px;min-height:160px;max-height:56vh;overflow:auto}
+  .gbcard{border:1px solid #808080;background:#ffffe1;padding:7px 9px;margin-bottom:7px;line-height:1.55}
+  .gbcard b{font-size:13px}
+  .gbcard .who{display:flex;gap:10px;flex-wrap:wrap;margin:2px 0 3px}
+  .gbcard p{margin:0;white-space:pre-wrap}
+  .gbcard .ts{float:right;font-size:11px}
+  .viewbody .gbcard{background:#f4f8ff}
+  #gbForm .frow{grid-template-columns:130px 1fr}
   .traits{display:contents}
   .plays a{color:#00f}
   .tsum{color:#000;font-size:11px;margin-left:4px;white-space:nowrap}
@@ -502,6 +511,28 @@
   </div>
 </div>
 
+<div class="back" id="gbBack">
+  <div class="window dlg gbdlg">
+    <div class="titlebar"><i class="ic" data-ic="bubble" data-sz="16"></i><div class="t">방명록 - 같이 가고 싶은 시나리오</div><button class="tbtn x" id="gbX">✕</button></div>
+    <div class="content"><div class="gblist" id="gbList"></div></div>
+    <div class="bar"><button class="btn left def" id="gbNew">글 남기기</button><button class="btn" id="gbReload">새로 고침</button><button class="btn" id="gbClose">닫기</button></div>
+  </div>
+</div>
+<div class="back" id="gbWriteBack">
+  <form class="window dlg" id="gbForm" autocomplete="off">
+    <div class="titlebar"><i class="ic" data-ic="bubble" data-sz="16"></i><div class="t">방명록 남기기</div><button type="button" class="tbtn x" id="gbWX">✕</button></div>
+    <div class="content">
+      <div class="frow"><label>시나리오 이름:</label><input id="gTitle" maxlength="120"></div>
+      <div class="frow"><label>링크:</label><input id="gUrl" type="url" placeholder="https://" maxlength="500"></div>
+      <div class="frow"><label>닉네임:</label><input id="gNick" maxlength="40"></div>
+      <div class="frow"><label>같이 가고 싶은 캐릭터:</label><input id="gChara" maxlength="80"></div>
+      <div class="frow top" style="grid-template-columns:1fr"><label>추천 이유:</label><textarea id="gWhy" rows="5" maxlength="1000"></textarea></div>
+      <div class="err" id="gErr"></div>
+    </div>
+    <div class="bar"><button type="submit" class="btn def" id="gSend">보내기</button><button type="button" class="btn" id="gbWCancel">취소</button></div>
+  </form>
+</div>
+
 <div class="back" id="helpBack">
   <div class="window dlg" style="max-width:420px">
     <div class="titlebar"><div class="t">도움말</div><button class="tbtn x" id="helpX">✕</button></div>
@@ -703,6 +734,13 @@ const PX=(()=>{
   function import16(d){ folder16(d); d.S(9,0,["..K..","..G..","..G..","GGGGG",".GGG.","..G.."],{K:"#006000",G:"#00a000"},1); }
   function err16(d){ const {C,L}=d; C(7,7,7,K); C(7,7,6,RED); for(let t=0;t<2;t++){ L(4+t,4,10+t,10,W); L(10+t,4,4+t,10,W);} }
   function start16(d){ pc16(d); }
+  function bubble32(d){ const {R}=d;
+    R(4,3,24,1,K); R(3,4,1,17,K); R(28,4,1,17,K); R(4,21,5,1,K); R(15,21,13,1,K); R(4,4,24,17,"#fffbd0"); R(4,4,24,1,W); R(4,4,1,17,W); R(27,5,1,16,"#e0d890"); R(5,20,22,1,"#e0d890");
+    for(let i=0;i<6;i++){ R(9+i,22+i,1,1,K); R(9,22+i,1,1,K); if(i<5) R(10,21+i,5-i,1,"#fffbd0"); } R(9,28,1,1,K);
+    for(const y of [8,11,14]) R(7,y,18,1,N); R(7,17,11,1,N);
+    d.S(21,15,["......KK",".....KRK","....KYYK","...KYYK.","..KYYK..",".KYYK...","KWYK....","KKK....."],{K,Y:"#ffd000",R:"#ff6060",W},1); }
+  function bubble16(d){ const {R}=d; R(1,1,14,1,K); R(1,10,3,1,K); R(8,10,7,1,K); R(1,1,1,10,K); R(14,1,1,10,K); R(2,2,12,8,"#fffbd0"); R(4,10,1,4,K); R(5,10,3,1,"#fffbd0"); R(5,11,2,1,"#fffbd0"); R(5,12,1,1,"#fffbd0"); R(7,11,1,1,K); R(6,12,1,1,K); R(5,13,1,1,K);
+    R(3,4,10,1,N); R(3,6,10,1,N); R(3,8,6,1,N); }
   function speaker16(d,mute){ d.S(1,3,mute?["....K","...KK","KKKWK","KGGWK","KGGWK","KKKWK","...KK","....K"]:["....K......","...KK..K...","KKKWK...K..","KGGWK.K..K.","KGGWK.K..K.","KKKWK...K..","...KK..K...","....K......"],{K,W,G},1);
     if(mute){ const {L}=d; for(let t=0;t<2;t++){ L(8+t,5,13+t,10,RED); L(13+t,5,8+t,10,RED);} } }
 
@@ -718,8 +756,8 @@ const PX=(()=>{
     for(let y=5;y<=14;y++){ const ins=y>10?1:0; R(3+ins,y,10-2*ins,1,G); R(3+ins,y,1,1,K); R(12-ins,y,1,1,K); }
     R(4,15,8,1,K); R(6,6,1,8,GD); R(9,6,1,8,GD); }
   const DRAW={
-    32:{bin:bin32,pc:pc32,folder:folder32,folderOpen:folderOpen32,file:file32,find:find32,new:new32,help:help32,info:info32,warn:warn32,floppy:floppy32,import:import32,err:(d)=>errDot(d,15,15,14)},
-    16:{bin:bin16,pc:pc16,folder:folder16,folderOpen:folderOpen16,file:file16,find:find16,new:new16,help:help16,back:back16,up:up16,props:props16,del:del16,views:views16,floppy:floppy16,import:import16,err:err16,start:start16,speaker:(d)=>speaker16(d,false),mute:(d)=>speaker16(d,true),info:(d)=>{const {C,R}=d;C(7,7,7,K);C(7,7,6,W);R(7,3,2,2,N);R(6,6,3,1,N);R(7,6,2,6,N);R(6,11,4,1,N);},warn:(d)=>{const {R}=d;for(let y=0;y<15;y++){const h=Math.floor(y/2);R(7-h,y,2*h+2,1,K);if(y>1&&y<14&&h>1)R(8-h+1,y,2*h-2,1,YEL);}R(7,5,2,5,K);R(7,11,2,2,K);}},
+    32:{bubble:bubble32,bin:bin32,pc:pc32,folder:folder32,folderOpen:folderOpen32,file:file32,find:find32,new:new32,help:help32,info:info32,warn:warn32,floppy:floppy32,import:import32,err:(d)=>errDot(d,15,15,14)},
+    16:{bubble:bubble16,bin:bin16,pc:pc16,folder:folder16,folderOpen:folderOpen16,file:file16,find:find16,new:new16,help:help16,back:back16,up:up16,props:props16,del:del16,views:views16,floppy:floppy16,import:import16,err:err16,start:start16,speaker:(d)=>speaker16(d,false),mute:(d)=>speaker16(d,true),info:(d)=>{const {C,R}=d;C(7,7,7,K);C(7,7,6,W);R(7,3,2,2,N);R(6,6,3,1,N);R(7,6,2,6,N);R(6,11,4,1,N);},warn:(d)=>{const {R}=d;for(let y=0;y<15;y++){const h=Math.floor(y/2);R(7-h,y,2*h+2,1,K);if(y>1&&y<14&&h>1)R(8-h+1,y,2*h-2,1,YEL);}R(7,5,2,5,K);R(7,11,2,2,K);}},
   };
   function url(name,size=32,opt){
     const base=size>=24?32:16, key=name+base+JSON.stringify(opt||"");
@@ -883,6 +921,7 @@ PX.cursor=(()=>{
     folder:(sz=32,open=false,emb="")=>PX.img(open?"folderOpen":"folder",sz>=24?32:16,emb||undefined),
     file:(sz=32,one=false,bad=false,lock=false,done=false,mood="")=>PX.img("file",sz>=24?32:16,{one,bad,lock,done,mood}),
     pc:(sz=32)=>PX.img("pc",sz>=24?32:16), find:(sz=32)=>PX.img("find",sz>=24?32:16),
+    bubble:(sz=32)=>PX.img("bubble",sz>=24?32:16),
     bin:(sz=32,full=false)=>PX.img("bin",sz>=24?32:16,full?{full:1}:undefined),
     newf:(sz=32)=>PX.img("new",sz>=24?32:16), help:(sz=32)=>PX.img("help",sz>=24?32:16),
   };
@@ -922,6 +961,49 @@ PX.cursor=(()=>{
     return true;
   }
 
+  // ───────── 방명록 (구글 폼 + 게시된 시트) ─────────
+  const GB=(window.GB_CONFIG&&window.GB_CONFIG.form&&window.GB_CONFIG.csv)?window.GB_CONFIG:null;
+  let gbRows=[], gbState="idle";
+  function parseCSV(t){ const rows=[]; let row=[], f="", q=false;
+    for(let i=0;i<t.length;i++){ const c=t[i];
+      if(q){ if(c==='"'){ if(t[i+1]==='"'){ f+='"'; i++; } else q=false; } else f+=c; }
+      else if(c==='"') q=true; else if(c===","){ row.push(f); f=""; } else if(c==="\n"){ row.push(f); rows.push(row); row=[]; f=""; } else if(c!=="\r") f+=c; }
+    if(f||row.length){ row.push(f); rows.push(row); } return rows; }
+  async function gbLoad(){
+    if(!GB) return; gbState="loading";
+    try{ const r=await fetch(GB.csv+(GB.csv.includes("?")?"&":"?")+"t="+Date.now(),{cache:"no-store"}); if(!r.ok) throw 0;
+      gbRows=parseCSV(await r.text()).slice(1).filter(x=>(x[1]||"").trim()||(x[5]||"").trim()).map(x=>({ts:(x[0]||"").slice(0,30),title:(x[1]||"").trim().slice(0,120),url:safeUrl((x[2]||"").trim()),nick:(x[3]||"").trim().slice(0,40),chara:(x[4]||"").trim().slice(0,80),why:(x[5]||"").trim().slice(0,1000)})).reverse();
+      gbState="ok"; }catch(e){ gbState="err"; }
+    render(); gbRender();
+  }
+  const normU=u=>String(u||"").split("?")[0].replace(/\/+$/,"");
+  function gbFor(it){ const t=displayTitle(it).trim(); return gbRows.filter(r=>(it.url&&r.url&&normU(r.url)===normU(it.url))||r.title===t||(it.title&&r.title===it.title.trim())); }
+  function gbCard(r,withTitle){ return `<div class="gbcard"><span class="ts">${esc(r.ts)}</span>${withTitle?`<b>${r.url?`<a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.title||"(제목 없음)")}</a>`:esc(r.title||"(제목 없음)")}</b>`:""}<div class="who"><span>✎ ${esc(r.nick||"익명")}</span>${r.chara?`<span>♟ ${esc(r.chara)}</span>`:""}</div>${r.why?`<p>${esc(r.why)}</p>`:""}</div>`; }
+  function gbSection(it){ if(!GB||it.deleted) return ""; const rs=gbFor(it); return rs.length?`<h4>방명록 (${rs.length})</h4>${rs.map(r=>gbCard(r,false)).join("")}`:""; }
+  function gbRender(){ if(!GB) return; $("gbList").innerHTML=gbState==="loading"&&!gbRows.length?"불러오는 중…":gbState==="err"&&!gbRows.length?"방명록을 불러오지 못했습니다. [새로 고침]을 눌러 보세요.":gbRows.length?gbRows.map(r=>gbCard(r,true)).join(""):"아직 남긴 글이 없습니다. 첫 글을 남겨 보세요!"; }
+  function openGuest(){ if(!GB) return; gbRender(); $("gbBack").classList.add("on"); gbLoad(); }
+  function openWrite(it){ if(!GB) return; $("gTitle").value=it?displayTitle(it):""; $("gUrl").value=it?(it.url||""):""; $("gChara").value=""; $("gWhy").value=""; $("gErr").textContent="";
+    try{ $("gNick").value=localStorage.getItem("trpg-nick")||""; }catch(e){}
+    $("gbWriteBack").classList.add("on"); setTimeout(()=>$(it?"gNick":"gTitle").focus(),30); }
+  $("gbX").onclick=$("gbClose").onclick=()=>$("gbBack").classList.remove("on");
+  $("gbWX").onclick=$("gbWCancel").onclick=()=>$("gbWriteBack").classList.remove("on");
+  $("gbNew").onclick=()=>openWrite(null); $("gbReload").onclick=gbLoad;
+  document.addEventListener("click",e=>{ const b=e.target.closest("[data-gb]"); if(b) openWrite(items.get(b.dataset.gb)); });
+  $("gbForm").addEventListener("submit",async e=>{
+    e.preventDefault();
+    const v={title:$("gTitle").value.trim(),url:$("gUrl").value.trim(),nick:$("gNick").value.trim(),chara:$("gChara").value.trim(),why:$("gWhy").value.trim()};
+    if(!v.title){ $("gErr").textContent="시나리오 이름을 적어 주세요."; return; }
+    if(!v.nick){ $("gErr").textContent="닉네임을 적어 주세요."; return; }
+    if(v.url&&!safeUrl(v.url)){ $("gErr").textContent="링크는 https:// 로 시작해야 합니다."; return; }
+    const body=new URLSearchParams(); for(const k of ["title","url","nick","chara","why"]) body.append(GB.entries[k],v[k]);
+    $("gSend").disabled=true;
+    try{ await fetch(GB.form,{method:"POST",mode:"no-cors",body}); }
+    catch(err){ $("gSend").disabled=false; $("gErr").textContent="보내지 못했습니다. 잠시 후 다시 시도해 주세요."; return; }
+    $("gSend").disabled=false; try{ localStorage.setItem("trpg-nick",v.nick); }catch(err){}
+    const d=new Date(); gbRows.unshift({ts:`${d.getFullYear()}. ${d.getMonth()+1}. ${d.getDate()}`,title:v.title,url:safeUrl(v.url),nick:v.nick,chara:v.chara,why:v.why});
+    $("gbWriteBack").classList.remove("on"); render(); gbRender(); toast("방명록","글을 남겼습니다. 고맙습니다!"); setTimeout(gbLoad,8000);
+  });
+
   // ───────── 설명 HTML ─────────
   function descHtml(i){
     const st=SMAP[statusOf(i)], url=safeUrl(i.url), one=isTaiman(i), p=pplText(i);
@@ -934,7 +1016,8 @@ PX.cursor=(()=>{
       ${(i.warns||[]).length?`<div class="tags">${i.warns.map(t=>`<span class="tag t-warn">⚠ ${hl(t)}</span>`).join("")}</div>`:""}
       ${i.plays&&i.plays.length?`<h4>다녀온 기록 (${i.plays.length}회)</h4><p class="plays">${i.plays.map(([n,d])=>`<a href="${BLOG}${+n}" target="_blank" rel="noopener">${esc(d)}</a>`).join(" · ")}</p>`:""}
       ${i.memo?`<h4>내 메모</h4><p>${hl(i.memo)}</p>`:""}
-      <div class="acts">${url?`<a class="btn" href="${esc(url)}" target="_blank" rel="noopener">${isBad(i)?"링크 열어 보기":"열기"}</a>`:""}${i.deleted?`<button class="btn" data-restore="${esc(i.id)}">복원</button><button class="btn" data-purge="${esc(i.id)}">완전히 삭제</button>`:`<button class="btn" data-edit="${esc(i.id)}">등록 정보</button>`}</div></div>`;
+      ${gbSection(i)}
+      <div class="acts">${GB&&!i.deleted?`<button class="btn" data-gb="${esc(i.id)}">같이 가요!</button>`:""}${url?`<a class="btn" href="${esc(url)}" target="_blank" rel="noopener">${isBad(i)?"링크 열어 보기":"열기"}</a>`:""}${i.deleted?`<button class="btn" data-restore="${esc(i.id)}">복원</button><button class="btn" data-purge="${esc(i.id)}">완전히 삭제</button>`:`<button class="btn" data-edit="${esc(i.id)}">등록 정보</button>`}</div></div>`;
   }
 
   // ───────── 바탕화면 ─────────
@@ -985,6 +1068,7 @@ PX.cursor=(()=>{
     if(n.pend) h+=ic(`data-open="smart:pend"`,ico.folder(32,false,"inbox"),"정리 대기",n.pend);
     if(n.bad) h+=ic(`data-open="smart:bad"`,ico.folder(32,false,"x"),"링크 점검 필요",n.bad,true);
     h+=ic(`data-open="smart:trash"`,ico.bin(32,nTrash>0),"휴지통",nTrash);
+    if(GB) h+=ic(`data-act="guest"`,ico.bubble(32),"방명록",gbRows.length);
     h+=ic(`data-act="find"`,ico.find(32),"찾기",null);
     h+=ic(`data-act="new"`,ico.newf(32),"새 시나리오",null);
     h+=ic(`data-act="help"`,ico.help(32),"도움말",null);
@@ -1190,6 +1274,7 @@ PX.cursor=(()=>{
     else if(a==="find") openFind();
     else if(a==="clearF"){ F=emptyF(); render(); }
     else if(a==="openAll") openLoc({t:"smart",k:"all"});
+    else if(a==="guest") openGuest();
     else if(a==="help"){ const m=Math.max(0,...[...items.values()].map(i=>+i.linkCheckedAt||0)); $("lastCheck").textContent=m?`(마지막 점검: ${fmtDate(m)})`:""; $("helpBack").classList.add("on"); }
   }
   $("menubar").addEventListener("click",e=>{
@@ -1439,6 +1524,7 @@ PX.cursor=(()=>{
     const step=()=>{ if(done) return; if(i<lines.length){ $("bootTxt").textContent+=lines[i++]+"\n"; timers.push(setTimeout(step,150)); } else { boot.classList.add("s2"); timers.push(setTimeout(fin,2600)); } };
     boot.addEventListener("pointerdown",fin); step();
   })();
+  gbLoad();
   render(); init().finally(()=>document.body.classList.remove("busy"));
 })();
 </script>
