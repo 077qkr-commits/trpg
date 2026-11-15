@@ -16,12 +16,12 @@ for x in json.load(open(playedp, encoding="utf-8")):
     if d.get("deleted"): continue
     played.append({"id": x.get("path") or x.get("id"), "title": d["title"], "system": d.get("system") or "기타", "status": "done", "plays": d.get("plays", []), "createdAt": d.get("createdAt", 0)})
 items = wish + played
-rep('<title>TRPG 시나리오 위시리스트</title>', '<title>가고 싶은 TRPG 시나리오</title>')
+rep('<title>TRPG 시나리오 위시리스트</title>', '<title>역설의 TRPG</title>')
 rep('<body class="busy">', '<body class="ro">')
 rep('  img.px{', '  body.ro #tbNew,body.ro #tbProp,body.ro #tbDel,body.ro #tbEmpty,body.ro .tsep,body.ro [data-act=new],body.ro #ctx hr,body.ro [data-act=prop],body.ro [data-act=del],body.ro [data-act=export],body.ro [data-act=import],body.ro [data-edit],body.ro [data-open="smart:trash"],body.ro .menubar>span:nth-child(2),body.ro .startmenu hr:first-of-type{display:none!important}\n  img.px{')
 rep('  function openForm(id){', '  function openForm(id){ return;')
 rep('<div class="content" style="line-height:1.7;padding:12px 14px">',
-    '<div class="content" style="line-height:1.7;padding:12px 14px"><b>가고 싶은 TRPG 시나리오</b><br>룰 폴더를 열면 가고 싶은 시나리오가 파일로 나옵니다. 파일을 누르면 인원·특징·태그·주의 키워드가 담긴 설명 창이 열리고, [열기]로 시나리오 페이지로 갈 수 있어요. 창은 여러 개 띄워 끌어 옮길 수 있습니다.<br><br>⭐ [당장 하고 싶은] 폴더에는 특히 가고 싶은 것만, ✔ [다녀온 시나리오] 폴더에는 이미 다녀온 시나리오가 룰별로 모여 있어요.<div hidden>')
+    '<div class="content" style="line-height:1.7;padding:12px 14px"><b>역설의 TRPG</b><br>룰 폴더를 열면 가고 싶은 시나리오가 파일로 나옵니다. 파일을 누르면 인원·특징·태그·주의 키워드가 담긴 설명 창이 열리고, [열기]로 시나리오 페이지로 갈 수 있어요. 창은 여러 개 띄워 끌어 옮길 수 있습니다.<br><br>⭐ [당장 하고 싶은] 폴더에는 특히 가고 싶은 것만, ✔ [다녀온 시나리오] 폴더에는 이미 다녀온 시나리오가 룰별로 모여 있어요.<div hidden>')
 rep('      <b>1:1 타이만</b><br>제목·태그 어디든 ‘타이만’이 있으면 1:1 시나리오로 분류됩니다.\n    </div>', '      </div>\n    </div>')
 stamp = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=9))).strftime("%Y.%m.%d")
 rep('  render(); init().finally(()=>document.body.classList.remove("busy"));',

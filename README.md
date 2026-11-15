@@ -1,4 +1,4 @@
-# 가고 싶은 TRPG 시나리오
+# 역설의 TRPG
 
 윈도우 98 풍 TRPG 시나리오 위시리스트(읽기 전용 공개 페이지). https://077qkr-commits.github.io/trpg/
 
