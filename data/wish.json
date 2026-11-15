@@ -26,7 +26,8 @@
 "무력함",
 "열린 결말",
 "로스트 높음"
-]
+],
+"mood": "gore"
 },
 {
 "id": "s_dokgam_23468776",
@@ -57,7 +58,8 @@
 "warns": [
 "전기고문",
 "KPC 로스트 중간"
-]
+],
+"mood": "love"
 },
 {
 "id": "s_kimchi_23489831",
@@ -87,7 +89,8 @@
 "PvP 가능",
 "로스트 가능",
 "진상 일부 미공개"
-]
+],
+"mood": "fun"
 },
 {
 "id": "s_kimiyou_23492820",
@@ -116,6 +119,283 @@
 "url": "https://www.postype.com/@kimiyou/post/23492820",
 "warns": [
 "KPC 로스트 가능"
-]
+],
+"mood": ""
+},
+{
+"id": "s_umuuuunme_23414313",
+"url": "https://www.postype.com/@umuuuunme/post/23414313",
+"title": "눅눅함 사이의 핏자국 (핏자국)",
+"author": "유문매",
+"pMin": 1,
+"pMax": 1,
+"time": "2~4시간",
+"traits": {
+"kpc": "있음",
+"stage": "시티",
+"era": "현대"
+},
+"tags": [
+"미스터리",
+"타이만",
+"시티",
+"현대",
+"범죄",
+"실종"
+],
+"warns": [
+"살인",
+"시체 훼손",
+"강도",
+"로스트 가능"
+],
+"mood": "myst",
+"linkStatus": "ok",
+"system": "CoC",
+"status": "wish",
+"prio": 2,
+"memo": "",
+"pending": false,
+"linkCheckedAt": 1794731800000,
+"createdAt": 1794731800000,
+"updatedAt": 1794731800000
+},
+{
+"id": "s_altxfamily_23365439",
+"url": "https://www.postype.com/@altxfamily/post/23365439",
+"title": "토킹 헤드: 대안가족을 찾아서",
+"author": "Team. 대안가족",
+"pMin": 0,
+"pMax": 0,
+"time": "",
+"tags": [],
+"warns": [
+"성인 인증 필요"
+],
+"mood": "",
+"linkStatus": "locked",
+"system": "CoC",
+"status": "wish",
+"prio": 2,
+"memo": "",
+"pending": false,
+"linkCheckedAt": 1794731800000,
+"createdAt": 1794731800001,
+"updatedAt": 1794731800001
+},
+{
+"id": "s_myojigi_23288381",
+"url": "https://www.postype.com/@myojigi/post/23288381",
+"title": "Nighttime Three-soda Show: With Pizza",
+"author": "묘지기",
+"pMin": 0,
+"pMax": 0,
+"time": "",
+"tags": [
+"코미디",
+"공포",
+"B급",
+"블랙 코미디",
+"토크쇼"
+],
+"warns": [],
+"mood": "fun",
+"linkStatus": "ok",
+"system": "CoC",
+"status": "wish",
+"prio": 2,
+"memo": "",
+"pending": false,
+"linkCheckedAt": 1794731800000,
+"createdAt": 1794731800002,
+"updatedAt": 1794731800002
+},
+{
+"id": "s_dkdsydgktpdy_23304454",
+"url": "https://www.postype.com/@dkdsydgktpdy/post/23304454",
+"title": "밀리 블루레이: 여우비",
+"author": "여우비",
+"pMin": 1,
+"pMax": 1,
+"time": "2~4시간",
+"traits": {
+"kpc": "있음",
+"era": "현대",
+"lost": "보통"
+},
+"tags": [
+"공포",
+"타이만",
+"현대",
+"코즈믹 호러",
+"영화",
+"레일로드"
+],
+"warns": [
+"기억 침해",
+"사생활 강제 관람",
+"자아·현실 혼란",
+"메타픽션",
+"로스트 중간"
+],
+"mood": "fear",
+"linkStatus": "ok",
+"system": "CoC",
+"status": "wish",
+"prio": 2,
+"memo": "",
+"pending": false,
+"linkCheckedAt": 1794731800000,
+"createdAt": 1794731800003,
+"updatedAt": 1794731800003
+},
+{
+"id": "s_shapeof1ove_23296291",
+"url": "https://www.postype.com/@shapeof1ove/post/23296291",
+"title": "카인신드롬",
+"author": "사랑의 형태에 대하여",
+"pMin": 1,
+"pMax": 1,
+"time": "",
+"traits": {
+"kpc": "있음",
+"era": "현대",
+"lost": "높음"
+},
+"tags": [
+"시리어스",
+"타이만",
+"현대",
+"사이비",
+"가족",
+"레일로드"
+],
+"warns": [
+"사이비",
+"세뇌",
+"살해",
+"유혈",
+"로스트 매우 높음",
+"해피엔딩 없음"
+],
+"mood": "",
+"linkStatus": "ok",
+"system": "CoC",
+"status": "wish",
+"prio": 2,
+"memo": "",
+"pending": false,
+"linkCheckedAt": 1794731800000,
+"createdAt": 1794731800004,
+"updatedAt": 1794731800004
+},
+{
+"id": "s_yeong-ryeon_23271828",
+"url": "https://www.postype.com/@yeong-ryeon/post/23271828",
+"title": "여명 열차",
+"author": "패화",
+"pMin": 1,
+"pMax": 1,
+"time": "1~3시간",
+"traits": {
+"kpc": "있음",
+"lost": "확정 로스트 있음"
+},
+"tags": [
+"슬픔",
+"타이만",
+"열차",
+"이별"
+],
+"warns": [
+"자살 암시",
+"살해",
+"폭력",
+"사고·재난",
+"확정 로스트"
+],
+"mood": "sad",
+"linkStatus": "ok",
+"system": "CoC",
+"status": "wish",
+"prio": 2,
+"memo": "",
+"pending": false,
+"linkCheckedAt": 1794731800000,
+"createdAt": 1794731800005,
+"updatedAt": 1794731800005
+},
+{
+"id": "s_xxxearendel_23194604",
+"url": "https://www.postype.com/@xxxearendel/post/23194604",
+"title": "그날, 파란 해수",
+"author": "shine",
+"pMin": 1,
+"pMax": 1,
+"time": "4~6시간",
+"traits": {
+"kpc": "있음",
+"era": "현대",
+"lost": "보통"
+},
+"tags": [
+"공포",
+"미스터리",
+"타이만",
+"현대",
+"가족 비극",
+"레일로드"
+],
+"warns": [
+"사망",
+"살해",
+"가정 폭력",
+"아동 학대",
+"불쾌한 결말 가능",
+"로스트 중간"
+],
+"mood": "fear",
+"linkStatus": "ok",
+"system": "CoC",
+"status": "wish",
+"prio": 2,
+"memo": "",
+"pending": false,
+"linkCheckedAt": 1794731800000,
+"createdAt": 1794731800006,
+"updatedAt": 1794731800006
+},
+{
+"id": "s_myochoqovh_22511342",
+"url": "https://www.postype.com/@myochoqovh/post/22511342",
+"title": "청색 화상, 그리고 ■",
+"author": "묘쵸",
+"pMin": 1,
+"pMax": 1,
+"time": "10시간 이상",
+"traits": {
+"kpc": "있음"
+},
+"tags": [
+"로맨스",
+"코미디",
+"타이만",
+"학원",
+"청춘",
+"여름"
+],
+"warns": [
+"기존 서사 있는 페어 추천"
+],
+"mood": "love",
+"linkStatus": "ok",
+"system": "CoC",
+"status": "wish",
+"prio": 2,
+"memo": "",
+"pending": false,
+"linkCheckedAt": 1794731800000,
+"createdAt": 1794731800007,
+"updatedAt": 1794731800007
 }
 ]
