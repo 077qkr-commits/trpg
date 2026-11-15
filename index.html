@@ -29,7 +29,7 @@
   .dicon:focus .lb,.dicon.sel .lb{background:var(--sel);outline:1px dotted #ff0}
   .dicon:focus img,.dicon.sel img{filter:brightness(.55) sepia(1) hue-rotate(185deg) saturate(5)}
   .ficon.sel img{filter:brightness(.55) sepia(1) hue-rotate(185deg) saturate(5)}
-  body.ro #tbNew,body.ro #tbProp,body.ro #tbDel,body.ro #tbEmpty,body.ro .tsep,body.ro [data-act=new],body.ro #ctx hr,body.ro [data-act=prop],body.ro [data-act=del],body.ro [data-act=export],body.ro [data-act=import],body.ro [data-edit],body.ro [data-open="smart:trash"],body.ro .menubar>span:nth-child(2),body.ro .startmenu hr:first-of-type{display:none!important}
+  body.ro #tbNew,body.ro #tbProp,body.ro #tbDel,body.ro #tbEmpty,body.ro .tsep,body.ro [data-act=new],body.ro #ctx hr,body.ro [data-act=prop],body.ro [data-act=del],body.ro [data-act=export],body.ro [data-act=import],body.ro [data-edit],body.ro [data-played],body.ro [data-open="smart:trash"],body.ro .menubar>span:nth-child(2),body.ro .startmenu hr:first-of-type{display:none!important}
   img.px{image-rendering:pixelated;image-rendering:crisp-edges;flex:none;display:block}
   i.ic{display:inline-flex;font-style:normal}
   .dicon img.px,.ficon img.px{width:48px;height:48px}
@@ -267,6 +267,21 @@
   .gbcard .ts{float:right;font-size:11px}
   .viewbody .gbcard{background:#f4f8ff}
   #gbForm .frow{grid-template-columns:130px 1fr}
+  #rOut{background:#fff;box-shadow:var(--sunken);min-height:120px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:12px;text-align:center;margin-top:8px}
+  #rOut img.px{width:48px;height:48px} #rOut b{font-size:15px;word-break:keep-all} #rOut .rq{font-size:44px;font-weight:bold;color:#000080}
+  #rOut.hit{background:#ffffe1}
+  .statdlg{max-width:560px}
+  #statBody{background:#fff;box-shadow:var(--sunken);padding:10px 12px;max-height:62vh;overflow:auto}
+  #statBody h4{margin:14px 0 5px;font-size:12px;color:#000080;border-bottom:1px solid #808080;padding-bottom:2px}
+  .stiles{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+  .stiles div{box-shadow:var(--sunken);padding:6px 4px;text-align:center;background:#ffffe1}
+  .stiles b{display:block;font-size:20px}
+  .sgrid{display:grid;grid-template-columns:minmax(70px,150px) 1fr 44px;gap:4px 8px;align-items:center}
+  .sl{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .sbar{height:14px;box-shadow:var(--sunken);background:#fff;padding:2px}
+  .sbar span{display:block;height:100%;background:repeating-linear-gradient(90deg,#000080 0 7px,#fff 7px 9px)}
+  .sv{text-align:right;font-variant-numeric:tabular-nums}
+  @media(max-width:560px){.stiles{grid-template-columns:repeat(2,1fr)}}
   .traits{display:contents}
   .plays a{color:#00f}
   .tsum{color:#000;font-size:11px;margin-left:4px;white-space:nowrap}
@@ -532,6 +547,34 @@
   </form>
 </div>
 
+<div class="back" id="rollBack">
+  <div class="window dlg" style="max-width:400px">
+    <div class="titlebar"><i class="ic" data-ic="dice" data-sz="16"></i><div class="t">시나리오 뽑기</div><button class="tbtn x" id="rX">✕</button></div>
+    <div class="content">
+      <div class="frow"><label>룰:</label><select id="rSys"></select></div>
+      <div class="frow"><label>인원:</label><select id="rPpl"><option value="">(전체)</option><option value="1">타이만 (1:1)</option><option value="n">다인</option></select></div>
+      <div class="frow"><label>시간:</label><select id="rTime"><option value="">(전체)</option><option value="s">4시간 미만</option><option value="m">4~8시간</option><option value="l">8시간 이상</option></select></div>
+      <div id="rOut"></div>
+    </div>
+    <div class="bar"><button class="btn def left" id="rGo">굴리기</button><button class="btn" id="rOpen" disabled>열어 보기</button><button class="btn" id="rClose">닫기</button></div>
+  </div>
+</div>
+<div class="back" id="statBack">
+  <div class="window dlg statdlg">
+    <div class="titlebar"><i class="ic" data-ic="chart" data-sz="16"></i><div class="t">통계</div><button class="tbtn x" id="statX">✕</button></div>
+    <div class="content"><div id="statBody"></div></div>
+    <div class="bar"><button class="btn def" id="statClose">닫기</button></div>
+  </div>
+</div>
+<div class="back" id="playBack">
+  <form class="window dlg" id="playForm" style="max-width:360px">
+    <div class="titlebar"><div class="t">다녀왔어요</div><button type="button" class="tbtn x" id="pX">✕</button></div>
+    <div class="content"><div id="pText" style="margin-bottom:10px;line-height:1.5"></div>
+      <div class="frow"><label>다녀온 날:</label><input type="date" id="pDate"></div><div class="err" id="pErr"></div></div>
+    <div class="bar"><button type="submit" class="btn def">확인</button><button type="button" class="btn" id="pCancel">취소</button></div>
+  </form>
+</div>
+
 <div class="back" id="helpBack">
   <div class="window dlg" style="max-width:420px">
     <div class="titlebar"><div class="t">도움말</div><button class="tbtn x" id="helpX">✕</button></div>
@@ -738,6 +781,19 @@ const PX=(()=>{
     for(let i=0;i<6;i++){ R(9+i,22+i,1,1,K); R(9,22+i,1,1,K); if(i<5) R(10,21+i,5-i,1,"#fffbd0"); } R(9,28,1,1,K);
     for(const y of [8,11,14]) R(7,y,18,1,N); R(7,17,11,1,N);
     d.S(21,15,["......KK",".....KRK","....KYYK","...KYYK.","..KYYK..",".KYYK...","KWYK....","KKK....."],{K,Y:"#ffd000",R:"#ff6060",W},1); }
+  function dice32(d){ const {R,C}=d;
+    R(5,5,22,1,K); R(4,6,1,21,K); R(27,6,1,21,K); R(5,27,22,1,K); R(5,6,22,21,W); R(25,7,2,20,GL); R(6,25,21,2,GL); R(5,6,22,1,W);
+    for(const [x,y] of [[10,11],[21,11],[15,16],[10,21],[21,21]]){ C(x,y,2,K); R(x-1,y-1,1,1,GD); }
+    R(27,9,3,1,K); R(30,10,1,19,K); R(8,30,22,1,K); R(28,10,2,20,G); R(7,28,21,2,G); R(7,28,1,2,K); }
+  function dice16(d){ const {R}=d; R(2,2,12,1,K); R(2,13,12,1,K); R(1,3,1,10,K); R(14,3,1,10,K); R(2,3,12,10,W); R(12,4,2,9,GL); R(3,11,11,2,GL);
+    for(const [x,y] of [[4,5],[10,5],[7,7],[4,10],[10,10]]) R(x,y,2,2,K); }
+  function chart32(d){ const {R}=d;
+    R(2,3,28,1,K); R(2,28,28,1,K); R(2,3,1,26,K); R(29,3,1,26,K); R(3,4,26,24,W); R(3,4,26,3,N); R(25,5,3,1,G);
+    R(6,9,1,16,K); R(6,25,20,1,K);
+    R(9,17,4,8,"#e00000"); R(9,17,4,1,"#ff8080"); R(15,12,4,13,"#00a000"); R(15,12,4,1,"#80ff80"); R(21,14,4,11,"#2060e0"); R(21,14,4,1,"#90b8ff");
+    for(const [x,y,h] of [[9,17,8],[15,12,13],[21,14,11]]){ R(x-1,y,1,h,K); R(x+4,y,1,h,K); R(x,y-1,4,1,K); } }
+  function chart16(d){ const {R}=d; R(1,1,14,1,K); R(1,14,14,1,K); R(1,1,1,14,K); R(14,1,1,14,K); R(2,2,12,12,W); R(2,2,12,2,N);
+    R(4,9,2,4,"#e00000"); R(7,6,2,7,"#00a000"); R(10,7,2,6,"#2060e0"); R(3,13,10,1,K); }
   function bubble16(d){ const {R}=d; R(1,1,14,1,K); R(1,10,3,1,K); R(8,10,7,1,K); R(1,1,1,10,K); R(14,1,1,10,K); R(2,2,12,8,"#fffbd0"); R(4,10,1,4,K); R(5,10,3,1,"#fffbd0"); R(5,11,2,1,"#fffbd0"); R(5,12,1,1,"#fffbd0"); R(7,11,1,1,K); R(6,12,1,1,K); R(5,13,1,1,K);
     R(3,4,10,1,N); R(3,6,10,1,N); R(3,8,6,1,N); }
   function speaker16(d,mute){ d.S(1,3,mute?["....K","...KK","KKKWK","KGGWK","KGGWK","KKKWK","...KK","....K"]:["....K......","...KK..K...","KKKWK...K..","KGGWK.K..K.","KGGWK.K..K.","KKKWK...K..","...KK..K...","....K......"],{K,W,G},1);
@@ -755,8 +811,8 @@ const PX=(()=>{
     for(let y=5;y<=14;y++){ const ins=y>10?1:0; R(3+ins,y,10-2*ins,1,G); R(3+ins,y,1,1,K); R(12-ins,y,1,1,K); }
     R(4,15,8,1,K); R(6,6,1,8,GD); R(9,6,1,8,GD); }
   const DRAW={
-    32:{bubble:bubble32,bin:bin32,pc:pc32,folder:folder32,folderOpen:folderOpen32,file:file32,find:find32,new:new32,help:help32,info:info32,warn:warn32,floppy:floppy32,import:import32,err:(d)=>errDot(d,15,15,14)},
-    16:{bubble:bubble16,bin:bin16,pc:pc16,folder:folder16,folderOpen:folderOpen16,file:file16,find:find16,new:new16,help:help16,back:back16,up:up16,props:props16,del:del16,views:views16,floppy:floppy16,import:import16,err:err16,start:start16,speaker:(d)=>speaker16(d,false),mute:(d)=>speaker16(d,true),info:(d)=>{const {C,R}=d;C(7,7,7,K);C(7,7,6,W);R(7,3,2,2,N);R(6,6,3,1,N);R(7,6,2,6,N);R(6,11,4,1,N);},warn:(d)=>{const {R}=d;for(let y=0;y<15;y++){const h=Math.floor(y/2);R(7-h,y,2*h+2,1,K);if(y>1&&y<14&&h>1)R(8-h+1,y,2*h-2,1,YEL);}R(7,5,2,5,K);R(7,11,2,2,K);}},
+    32:{dice:dice32,chart:chart32,bubble:bubble32,bin:bin32,pc:pc32,folder:folder32,folderOpen:folderOpen32,file:file32,find:find32,new:new32,help:help32,info:info32,warn:warn32,floppy:floppy32,import:import32,err:(d)=>errDot(d,15,15,14)},
+    16:{dice:dice16,chart:chart16,bubble:bubble16,bin:bin16,pc:pc16,folder:folder16,folderOpen:folderOpen16,file:file16,find:find16,new:new16,help:help16,back:back16,up:up16,props:props16,del:del16,views:views16,floppy:floppy16,import:import16,err:err16,start:start16,speaker:(d)=>speaker16(d,false),mute:(d)=>speaker16(d,true),info:(d)=>{const {C,R}=d;C(7,7,7,K);C(7,7,6,W);R(7,3,2,2,N);R(6,6,3,1,N);R(7,6,2,6,N);R(6,11,4,1,N);},warn:(d)=>{const {R}=d;for(let y=0;y<15;y++){const h=Math.floor(y/2);R(7-h,y,2*h+2,1,K);if(y>1&&y<14&&h>1)R(8-h+1,y,2*h-2,1,YEL);}R(7,5,2,5,K);R(7,11,2,2,K);}},
   };
   function url(name,size=32,opt){
     const base=size>=24?32:16, key=name+base+JSON.stringify(opt||"");
@@ -920,7 +976,7 @@ PX.cursor=(()=>{
     folder:(sz=32,open=false,emb="")=>PX.img(open?"folderOpen":"folder",sz>=24?32:16,emb||undefined),
     file:(sz=32,one=false,bad=false,lock=false,done=false,mood="")=>PX.img("file",sz>=24?32:16,{one,bad,lock,done,mood}),
     pc:(sz=32)=>PX.img("pc",sz>=24?32:16), find:(sz=32)=>PX.img("find",sz>=24?32:16),
-    bubble:(sz=32)=>PX.img("bubble",sz>=24?32:16),
+    bubble:(sz=32)=>PX.img("bubble",sz>=24?32:16), dice:(sz=32)=>PX.img("dice",sz>=24?32:16), chart:(sz=32)=>PX.img("chart",sz>=24?32:16),
     bin:(sz=32,full=false)=>PX.img("bin",sz>=24?32:16,full?{full:1}:undefined),
     newf:(sz=32)=>PX.img("new",sz>=24?32:16), help:(sz=32)=>PX.img("help",sz>=24?32:16),
   };
@@ -1004,6 +1060,79 @@ PX.cursor=(()=>{
     $("gbWriteBack").classList.remove("on"); render(); gbRender(); toast("방명록","글을 남겼습니다. 고맙습니다!"); setTimeout(gbLoad,8000);
   });
 
+  // ───────── 시나리오 뽑기 ─────────
+  function rollPool(){
+    const sys=$("rSys").value, ppl=$("rPpl").value, tm=$("rTime").value;
+    return [...items.values()].filter(i=>!i.deleted&&!isDone(i)&&(!sys||sysOf(i)===sys)&&(!ppl||(ppl==="1")===isTaiman(i))&&
+      (!tm||(i.time&&(tm==="s"?timeNum(i.time)<4:tm==="m"?(timeNum(i.time)>=4&&timeNum(i.time)<8):timeNum(i.time)>=8))));
+  }
+  let rollPick=null, rollTimer=null;
+  function openRoll(){
+    const syss=[...new Set([...items.values()].filter(i=>!i.deleted&&!isDone(i)).map(sysOf))].sort((a,b)=>a.localeCompare(b,"ko"));
+    $("rSys").innerHTML=`<option value="">(모든 룰)</option>`+syss.map(s=>`<option>${esc(s)}</option>`).join("");
+    rollPick=null; $("rOut").innerHTML=`<div class="rq">?</div>`; $("rOpen").disabled=true; $("rollBack").classList.add("on");
+  }
+  function doRoll(){
+    const pool=rollPool(); clearInterval(rollTimer);
+    if(!pool.length){ rollPick=null; $("rOpen").disabled=true; $("rOut").innerHTML=`<div>조건에 맞는 위시 시나리오가 없습니다.</div>`; return; }
+    let n=0; $("rOpen").disabled=true; $("rGo").disabled=true;
+    rollTimer=setInterval(()=>{
+      const it=pool[Math.floor(Math.random()*pool.length)]; n++;
+      $("rOut").innerHTML=`${fileIco(32,it)}<b>${esc(displayTitle(it))}</b><span>${esc([sysOf(it),pplText(it),it.time].filter(Boolean).join(" · "))}</span>`;
+      if(n%2===0&&typeof clickSnd==="function") clickSnd();
+      if(n>=12){ clearInterval(rollTimer); rollPick=it.id; $("rOpen").disabled=false; $("rGo").disabled=false; $("rGo").textContent="다시 굴리기"; $("rOut").classList.add("hit"); setTimeout(()=>$("rOut").classList.remove("hit"),400); }
+    },80);
+  }
+  $("rGo").onclick=doRoll;
+  $("rOpen").onclick=()=>{ if(rollPick){ $("rollBack").classList.remove("on"); openView(rollPick); } };
+  $("rX").onclick=$("rClose").onclick=()=>{ clearInterval(rollTimer); $("rGo").disabled=false; $("rollBack").classList.remove("on"); };
+
+  // ───────── 통계 ─────────
+  function statBars(pairs,unit){
+    const max=Math.max(1,...pairs.map(p=>p[1]));
+    return `<div class="sgrid">${pairs.map(([l,v])=>`<div class="sl" title="${esc(l)}">${esc(l)}</div><div class="sbar"><span style="width:${Math.max(2,Math.round(v/max*100))}%"></span></div><div class="sv">${v}${unit}</div>`).join("")}</div>`;
+  }
+  function openStats(){
+    const all=[...items.values()].filter(i=>!i.deleted), wish=all.filter(i=>!isDone(i)), done=all.filter(isDone);
+    const pc=i=>Math.max(1,(i.plays||[]).length), total=done.reduce((a,i)=>a+pc(i),0);
+    const bySys=new Map(), byYear=new Map(), byMood=new Map(), wSys=new Map();
+    done.forEach(i=>{ bySys.set(sysOf(i),(bySys.get(sysOf(i))||0)+pc(i)); (i.plays||[]).forEach(p=>{ const y=String(p[1]||"").slice(0,4); if(/^\d{4}$/.test(y)) byYear.set(y,(byYear.get(y)||0)+1); }); });
+    wish.forEach(i=>{ const m=moodOf(i), l=m?(MOODS.find(x=>x[0]===m)||[0,m])[1]:"정해지지 않음"; byMood.set(l,(byMood.get(l)||0)+1); wSys.set(sysOf(i),(wSys.get(sysOf(i))||0)+1); });
+    const desc=m=>[...m.entries()].sort((a,b)=>b[1]-a[1]);
+    const top=done.filter(i=>pc(i)>1).sort((a,b)=>pc(b)-pc(a)||displayTitle(a).localeCompare(displayTitle(b),"ko")).slice(0,7).map(i=>[displayTitle(i),pc(i)]);
+    const years=[...byYear.entries()].sort((a,b)=>a[0].localeCompare(b[0]));
+    $("statBody").innerHTML=`
+      <div class="stiles"><div><b>${wish.length}</b>위시 시나리오</div><div><b>${done.length}</b>다녀온 시나리오</div><div><b>${total}</b>총 플레이 횟수</div><div><b>${wish.filter(isTaiman).length}</b>위시 중 타이만</div></div>
+      ${years.length?`<h4>연도별 플레이 횟수</h4>${statBars(years,"회")}`:""}
+      ${bySys.size?`<h4>룰별 플레이 횟수</h4>${statBars(desc(bySys),"회")}`:""}
+      ${top.length?`<h4>여러 번 다녀온 시나리오</h4>${statBars(top,"회")}`:""}
+      ${wSys.size?`<h4>위시 · 룰별</h4>${statBars(desc(wSys),"개")}`:""}
+      ${byMood.size?`<h4>위시 · 대표 키워드별</h4>${statBars(desc(byMood),"개")}`:""}`;
+    $("statBack").classList.add("on"); $("statBody").scrollTop=0;
+  }
+  $("statX").onclick=$("statClose").onclick=()=>$("statBack").classList.remove("on");
+
+  // ───────── 위시 → 다녀옴 ─────────
+  let playId=null;
+  function openPlayed(id){
+    const it=items.get(id); if(!it||it.deleted) return; playId=id;
+    const d=new Date(), pad=n=>String(n).padStart(2,"0");
+    $("pDate").value=`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+    $("pText").textContent=isDone(it)?`'${displayTitle(it)}'에 다녀온 날을 하나 더 추가합니다.`:`'${displayTitle(it)}'을(를) 다녀온 시나리오로 옮깁니다.`;
+    $("pErr").textContent=""; $("playBack").classList.add("on");
+  }
+  $("pX").onclick=$("pCancel").onclick=()=>$("playBack").classList.remove("on");
+  $("playForm").addEventListener("submit",e=>{
+    e.preventDefault(); const it=items.get(playId), v=$("pDate").value;
+    if(!it) return; if(!/^\d{4}-\d{2}-\d{2}$/.test(v)){ $("pErr").textContent="날짜를 골라 주세요."; return; }
+    const ds=v.replace(/-/g,"."), plays=[[0,ds],...(it.plays||[])].sort((a,b)=>String(b[1]).localeCompare(String(a[1]))||(b[0]-a[0]));
+    const was=isDone(it), ms=new Date(plays[0][1].replace(/\./g,"-")+"T00:00:00+09:00").getTime()||Date.now();
+    $("playBack").classList.remove("on");
+    saveItem({...it,status:"done",plays,createdAt:ms+(+plays[0][0]||0),updatedAt:Date.now()});
+    toast("다녀온 시나리오",was?"다녀온 날을 추가했습니다.":"다녀온 시나리오 폴더로 옮겼습니다.");
+  });
+  document.addEventListener("click",e=>{ const b=e.target.closest("[data-played]"); if(b) openPlayed(b.dataset.played); });
+
   // ───────── 설명 HTML ─────────
   function descHtml(i){
     const st=SMAP[statusOf(i)], url=safeUrl(i.url), one=isTaiman(i), p=pplText(i);
@@ -1014,10 +1143,10 @@ PX.cursor=(()=>{
       <dl class="dl"><dt>룰</dt><dd>${esc(sysOf(i))}</dd><dt>작가</dt><dd>${hl(i.author||"-")}</dd><dt>인원</dt><dd>${one?"1:1 (타이만)":esc(p||"-")}</dd><dt>시간</dt><dd>${esc(i.time||"-")}</dd>${traitSummary(i)?`<dt>특징</dt><dd>${hl(traitSummary(i))}</dd>`:""}<dt>상태</dt><dd><span class="st" style="--sc:${st.c}">${st.label}</span></dd>${isDone(i)?"":`<dt>우선</dt><dd class="stars">${"★".repeat(i.prio||1)}<i>${"★".repeat(3-(i.prio||1))}</i></dd>`}</dl>
       ${tags.length?`<div class="tags">${tags.map(t=>`<span class="tag ${TAG_CLASS[t]||""}">#${hl(t)}</span>`).join("")}</div>`:""}
       ${(i.warns||[]).length?`<div class="tags">${i.warns.map(t=>`<span class="tag t-warn">⚠ ${hl(t)}</span>`).join("")}</div>`:""}
-      ${i.plays&&i.plays.length?`<h4>다녀온 기록 (${i.plays.length}회)</h4><p class="plays">${i.plays.map(([n,d])=>`<a href="${BLOG}${+n}" target="_blank" rel="noopener">${esc(d)}</a>`).join(" · ")}</p>`:""}
+      ${i.plays&&i.plays.length?`<h4>다녀온 기록 (${i.plays.length}회)</h4><p class="plays">${i.plays.map(([n,d])=>+n>0?`<a href="${BLOG}${+n}" target="_blank" rel="noopener">${esc(d)}</a>`:esc(d)).join(" · ")}</p>`:""}
       ${i.memo?`<h4>내 메모</h4><p>${hl(i.memo)}</p>`:""}
       ${gbSection(i)}
-      <div class="acts">${GB&&!i.deleted?`<button class="btn" data-gb="${esc(i.id)}">같이 가요!</button>`:""}${url?`<a class="btn" href="${esc(url)}" target="_blank" rel="noopener">${isBad(i)?"링크 열어 보기":"열기"}</a>`:""}${i.deleted?`<button class="btn" data-restore="${esc(i.id)}">복원</button><button class="btn" data-purge="${esc(i.id)}">완전히 삭제</button>`:`<button class="btn" data-edit="${esc(i.id)}">등록 정보</button>`}</div></div>`;
+      <div class="acts">${!i.deleted?`<button class="btn" data-played="${esc(i.id)}">${isDone(i)?"다녀온 날 추가":"다녀왔어요"}</button>`:""}${GB&&!i.deleted?`<button class="btn" data-gb="${esc(i.id)}">같이 가요!</button>`:""}${url?`<a class="btn" href="${esc(url)}" target="_blank" rel="noopener">${isBad(i)?"링크 열어 보기":"열기"}</a>`:""}${i.deleted?`<button class="btn" data-restore="${esc(i.id)}">복원</button><button class="btn" data-purge="${esc(i.id)}">완전히 삭제</button>`:`<button class="btn" data-edit="${esc(i.id)}">등록 정보</button>`}</div></div>`;
   }
 
   // ───────── 바탕화면 ─────────
@@ -1068,6 +1197,8 @@ PX.cursor=(()=>{
     if(n.pend) h+=ic(`data-open="smart:pend"`,ico.folder(32,false,"inbox"),"정리 대기",n.pend);
     if(n.bad) h+=ic(`data-open="smart:bad"`,ico.folder(32,false,"x"),"링크 점검 필요",n.bad,true);
     h+=ic(`data-open="smart:trash"`,ico.bin(32,nTrash>0),"휴지통",nTrash);
+    h+=ic(`data-act="roll"`,ico.dice(32),"시나리오 뽑기",null);
+    h+=ic(`data-act="stats"`,ico.chart(32),"통계",null);
     if(GB) h+=ic(`data-act="guest"`,ico.bubble(32),"방명록",gbRows.length);
     h+=ic(`data-act="find"`,ico.find(32),"찾기",null);
     h+=ic(`data-act="new"`,ico.newf(32),"새 시나리오",null);
@@ -1274,6 +1405,8 @@ PX.cursor=(()=>{
     else if(a==="clearF"){ F=emptyF(); render(); }
     else if(a==="openAll") openLoc({t:"smart",k:"all"});
     else if(a==="guest") openGuest();
+    else if(a==="roll") openRoll();
+    else if(a==="stats") openStats();
     else if(a==="help"){ const m=Math.max(0,...[...items.values()].map(i=>+i.linkCheckedAt||0)); $("lastCheck").textContent=m?`(마지막 점검: ${fmtDate(m)})`:""; $("helpBack").classList.add("on"); }
   }
   $("menubar").addEventListener("click",e=>{
