@@ -224,14 +224,21 @@
   #boot.out{opacity:0;pointer-events:none}
   #boot pre{margin:0;font:inherit;white-space:pre-wrap}
   #boot .skip{position:absolute;right:16px;bottom:12px;color:#606060;font-size:12px}
-  #boot .splash{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(#5aa7e8,#bfe1fb 55%,#fff);color:#000;font-family:var(--font)}
+  #boot .splash{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;background:#000;color:#fff;font-family:"Trebuchet MS",Tahoma,Arial,sans-serif}
   #boot.s2 .splash{display:flex}
-  #boot .logo{font-size:44px;font-weight:bold;letter-spacing:-1px;text-shadow:2px 2px 0 #fff}
-  #boot .logo b{color:#000080;font-size:60px;font-style:italic;margin-left:6px}
-  #boot .sub{margin-top:4px;font-size:14px;letter-spacing:6px;color:#000}
-  #boot .bar{position:absolute;left:0;right:0;bottom:0;height:16px;background:linear-gradient(90deg,#000080,#1084d0,#bfe1fb,#1084d0,#000080);background-size:50% 100%;animation:bootbar 1.2s linear infinite}
-  @keyframes bootbar{to{background-position:100% 0}}
-  @media(max-width:600px){#boot .logo{font-size:28px}#boot .logo b{font-size:40px}#boot{font-size:12px}}
+  #boot .brand{display:flex;flex-direction:column;align-items:flex-start}
+  #boot .die{width:118px;height:118px;margin:0 0 -6px 96px}
+  #boot .small{font-size:17px;letter-spacing:.5px;margin-left:4px}
+  #boot .logo{font-size:58px;font-weight:bold;letter-spacing:-2.5px;line-height:1;display:flex;align-items:flex-start}
+  #boot .logo sup{font-size:30px;color:#ff7a1a;letter-spacing:-1px;margin-left:3px;line-height:1}
+  #boot .edition{font-size:27px;margin-left:6px;line-height:1.15;font-weight:normal;letter-spacing:0}
+  #boot .load{margin-top:54px;width:150px;height:16px;border:2px solid #b8b8b8;border-radius:5px;overflow:hidden;position:relative;background:#000}
+  #boot .load i{position:absolute;top:2px;left:0;display:flex;gap:3px;animation:bootrun 1.6s linear infinite}
+  #boot .load b{width:9px;height:8px;border-radius:1px;background:linear-gradient(#9fc0ff,#2a5ce8 55%,#1b3fb0)}
+  @keyframes bootrun{from{transform:translateX(-40px)}to{transform:translateX(150px)}}
+  #boot .cp{position:absolute;left:26px;bottom:22px;font-size:13px;line-height:1.35;font-family:Tahoma,Arial,sans-serif}
+  #boot .mk{position:absolute;right:26px;bottom:22px;font-size:17px;font-weight:bold;font-style:italic;letter-spacing:-.5px}
+  @media(max-width:600px){#boot .die{width:84px;height:84px;margin-left:60px}#boot .logo{font-size:38px}#boot .logo sup{font-size:20px}#boot .edition{font-size:19px}#boot .small{font-size:13px}#boot{font-size:12px}#boot .cp{font-size:11px;left:14px}#boot .mk{font-size:14px;right:14px}}
   /* 창 최대화·크기 조절 */
   .explorer.max{inset:0 0 30px 0!important;width:auto!important;height:auto!important;translate:none!important}
   .grip{position:absolute;right:3px;bottom:3px;width:15px;height:15px;cursor:nwse-resize!important;touch-action:none;background:repeating-linear-gradient(135deg,transparent 0 3px,#fff 3px 4px,#808080 4px 6px);clip-path:polygon(100% 0,100% 100%,0 100%)}
@@ -281,7 +288,19 @@
 </head>
 <body class="busy">
 <div id="boot"><pre id="bootTxt"></pre>
-  <div class="splash"><div class="logo">TRPG SCENARIO<b>98</b></div><div class="sub">WISHLIST</div><div class="bar"></div></div></div>
+  <div class="splash"><div class="brand">
+    <svg class="die" viewBox="0 0 120 120"><polygon points="60,6 107,33 107,87 60,114 13,87 13,33" fill="#111" stroke="#000" stroke-width="2"/>
+      <polygon points="60,6 107,33 60,44" fill="#ff7a1a"/><polygon points="60,6 13,33 60,44" fill="#e8401c"/>
+      <polygon points="107,33 107,87 84,84 60,44" fill="#8fd12a"/><polygon points="13,33 13,87 36,84 60,44" fill="#2f7fe8"/>
+      <polygon points="60,44 84,84 36,84" fill="#ffd21f"/>
+      <polygon points="107,87 60,114 84,84" fill="#4c9a1c"/><polygon points="13,87 60,114 36,84" fill="#1b4fb8"/><polygon points="36,84 84,84 60,114" fill="#e0a000"/>
+      <g fill="none" stroke="#000" stroke-width="2.2" stroke-linejoin="round"><polygon points="60,6 107,33 107,87 60,114 13,87 13,33"/><polygon points="60,44 84,84 36,84"/><path d="M60 6V44M107 33L60 44L13 33M107 87L84 84M13 87L36 84M60 114L36 84M60 114L84 84"/></g>
+      <text x="60" y="78" text-anchor="middle" font-family="Tahoma,Arial" font-weight="bold" font-size="22" fill="#000">20</text></svg>
+    <div class="small">Tabletop</div>
+    <div class="logo">TRPG Scenario<sup>98</sup></div>
+    <div class="edition">Wishlist</div></div>
+    <div class="load"><i><b></b><b></b><b></b></i></div>
+    <div class="cp">Copyright © 1998-2026<br>TRPG Scenario Wishlist</div><div class="mk">TRPG 98</div></div></div>
 
 <!-- 바탕화면 -->
 <div class="desktop" id="desktop"></div>
@@ -1382,7 +1401,7 @@ PX.cursor=(()=>{
     const boot=$("boot"), lines=["TRPG-BIOS (C) 1998 Scenario Systems, Inc.","","CPU  : Dice Roller 1D100 at 233MHz","Memory Test : 65536K OK","","Detecting Primary Master ... 위시리스트","Detecting Primary Slave  ... 다녀온 시나리오","Detecting KPC ............. OK","","Starting TRPG 98..."];
     let i=0, done=false; const timers=[];
     const fin=()=>{ if(done) return; done=true; timers.forEach(clearTimeout); boot.classList.add("out"); setTimeout(()=>boot.remove(),500); chime(); };
-    const step=()=>{ if(done) return; if(i<lines.length){ $("bootTxt").textContent+=lines[i++]+"\n"; timers.push(setTimeout(step,150)); } else { boot.classList.add("s2"); timers.push(setTimeout(fin,1400)); } };
+    const step=()=>{ if(done) return; if(i<lines.length){ $("bootTxt").textContent+=lines[i++]+"\n"; timers.push(setTimeout(step,150)); } else { boot.classList.add("s2"); timers.push(setTimeout(fin,2600)); } };
     boot.addEventListener("pointerdown",fin); step();
   })();
   render(); init().finally(()=>document.body.classList.remove("busy"));
