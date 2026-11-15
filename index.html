@@ -547,18 +547,18 @@ const PX=(()=>{
     if(lines) for(let i=0,y=y0+10;y<y1-3;y+=3,i++) R(x0+4,y,(i%3===2?(x1-x0)-12:(x1-x0)-7),1,lc||NL);
   }
   const MOOD={
-    fear:{fill:"#e6e0f2",line:"#40305a",rows:[".KKKKK.","KWWWWWK","KWKWKWK","KWWWWWK","KKWWWKK",".KWKWK.",".KKKKK."],map:{K,W}},
-    gore:{fill:"#ffdcdc",line:"#a00000",rows:["...K...","..KRK..",".KRRRK.","KRRRRRK","KRWRRRK",".KRRRK.","..KKK.."],map:{K,R:"#e00000",W:"#ff9090"}},
-    fun:{fill:"#fff7c8",line:"#806000",rows:[".KKKKK.","KYYYYYK","KYKYKYK","KYYYYYK","KYKKKYK","KYYYYYK",".KKKKK."],map:{K,Y:YEL}},
-    heal:{fill:"#e0f6d8",line:"#2a6a20",rows:["....KKK","..KKGGK",".KGGLGK","KGGLGGK","KGLGGK.","KKGGK..","KKKK..."],map:{K,G:"#30b030",L:"#a0f090"}},
-    sad:{fill:"#dde9ff",line:"#2a3f8a",rows:["...K...","..KBK..",".KBBBK.","KBBBBBK","KBWBBBK",".KBBBK.","..KKK.."],map:{K,B:"#3080ff",W:"#c0e0ff"}},
-    love:{fill:"#ffe2f0",line:"#a03070",rows:["..KKK..",".KCWCK.","KKKCKKK","KYK.KYK","KY...YK","KYK.KYK",".KYYYK.","..KKK.."],map:{K,Y:"#ffd000",C:"#80e0ff",W}},
-    myst:{fill:"#ece4fa",line:"#4f2f8a",rows:[".KKKKK.","KPPPPPK","KKKKPPK","..KPPK.","..KKK..","..KPK..","..KKK.."],map:{K,P:"#9a60d8"}},
+    fear:{fill:"#cfc4ea",line:"#40305a",rows:[".KKKKK.","KWWWWWK","KWKWKWK","KWWWWWK","KKWWWKK",".KWKWK.",".KKKKK."],map:{K,W}},
+    gore:{fill:"#ffb8b8",line:"#a00000",rows:["...K...","..KRK..",".KRRRK.","KRRRRRK","KRWRRRK",".KRRRK.","..KKK.."],map:{K,R:"#e00000",W:"#ff9090"}},
+    fun:{fill:"#ffee90",line:"#806000",rows:[".KKKKK.","KYYYYYK","KYKYKYK","KYYYYYK","KYKKKYK","KYYYYYK",".KKKKK."],map:{K,Y:YEL}},
+    heal:{fill:"#bfeeb0",line:"#2a6a20",rows:["....KKK","..KKGGK",".KGGLGK","KGGLGGK","KGLGGK.","KKGGK..","KKKK..."],map:{K,G:"#30b030",L:"#a0f090"}},
+    sad:{fill:"#b8d2ff",line:"#2a3f8a",rows:["...K...","..KBK..",".KBBBK.","KBBBBBK","KBWBBBK",".KBBBK.","..KKK.."],map:{K,B:"#3080ff",W:"#c0e0ff"}},
+    love:{fill:"#ffc0de",line:"#a03070",rows:["..KKK..",".KCWCK.","KKKCKKK","KYK.KYK","KY...YK","KYK.KYK",".KYYYK.","..KKK.."],map:{K,Y:"#ffd000",C:"#80e0ff",W}},
+    myst:{fill:"#d9c8f6",line:"#4f2f8a",rows:[".KKKKK.","KPPPPPK","KKKKPPK","..KPPK.","..KKK..","..KPK..","..KKK.."],map:{K,P:"#9a60d8"}},
   };
   function file32(d,o={}){
     const m=MOOD[o.mood];
     page32(d,5,1,26,30,true,m?m.line:(o.one?"#a03070":NL),m&&m.fill);
-    if(m) d.S(0,0,m.rows,m.map,1);
+    if(m) d.S(0,0,m.rows,m.map,2);
     if(o.one) d.S(1,19,EMB.heart.rows,EMB.heart.map,2);
     if(o.bad) errDot(d,24,24,7);
     else if(o.lock) lock(d,20,19);
@@ -627,7 +627,7 @@ const PX=(()=>{
     R(3,14,10,1,GL); R(12,5,1,10,GL);
     R(4,7,7,1,lc||NL); R(4,9,7,1,lc||NL); R(4,11,5,1,lc||NL);
   }
-  function file16(d,o={}){ const m=MOOD[o.mood]; page16(d,m?m.line:(o.one?"#a03070":NL),m&&m.fill);
+  function file16(d,o={}){ const m=MOOD[o.mood]; page16(d,m?m.line:(o.one?"#a03070":NL),m&&m.fill); if(m) d.S(0,0,m.rows,m.map,1);
     if(o.one) d.S(0,10,[".K.K.","KPKPK","KPPPK",".KPK.","..K.."],{K,P:PK},1);
     if(o.bad){ const {C,L}=d; C(12,12,3,K); C(12,12,2,RED); L(11,11,13,13,W); L(13,11,11,13,W); }
     else if(o.done) d.S(10,11,["....KK","...KGK","K.KGK.","KKGK..",".KK..."],{K,G:"#00c000"},1);
